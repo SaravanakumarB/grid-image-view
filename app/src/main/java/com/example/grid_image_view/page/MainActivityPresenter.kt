@@ -48,7 +48,10 @@ class MainActivityPresenter(
 
         imageList.clear()
         cacheUtils.create(activity)
+        createRecyclerView()
+    }
 
+    private fun createRecyclerView() {
         val layoutManager = GridLayoutManager(activity, 3)
         endlessScrollListener = object : EndlessScrollListener(layoutManager, 0) {
             override fun onLoadMore(pageIndex: Int, totalItemsCount: Int, view: RecyclerView?) {

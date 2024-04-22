@@ -48,16 +48,19 @@ class CacheUtils {
         cacheDir = getDiskCacheDir(activity, DISK_CACHE_SUBDIR)
     }
 
+    /* Memory Cache get Image method */
     private fun getImageFromMemory(fileName: String): Bitmap? {
         return memoryCache.get(fileName)
     }
 
+    /* Memory Cache add Image to memory method */
     private fun addImageToMemory(fileName: String, bitmap: Bitmap?) {
         if (memoryCache.get(fileName) == null && bitmap != null) {
             memoryCache.put(fileName, bitmap)
         }
     }
 
+    /* Disk Cache - create directory in local storage */
     private fun getDiskCacheDir(context: Context, uniqueName: String): File {
         // Check if media is mounted or storage is built-in, if so, try and use external cache dir
         // otherwise use internal cache dir
@@ -80,6 +83,7 @@ class CacheUtils {
         return mediaStorageDir
     }
 
+    /* Disk Cache save Image method */
     private fun saveImageToStorage(image: Bitmap?, fileName: String) {
         val pictureFile: File = getOutputMediaFile(fileName)
         if (pictureFile == null) {
@@ -101,6 +105,7 @@ class CacheUtils {
         }
     }
 
+    /* Creating file in specified location for image */
     private fun getOutputMediaFile(fileName: String): File {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
@@ -108,6 +113,7 @@ class CacheUtils {
         return mediaFile
     }
 
+    /* Disk cache get image method */
     private fun getImageFromStorage(fileName: String) : Bitmap? {
         try {
             val f: File = File(cacheDir.path, fileName)
@@ -118,6 +124,7 @@ class CacheUtils {
         return null
     }
 
+    /* Get image either from disk or memory cache */
     fun getImageSavedInDiskOrMemory(fileName: String) : Bitmap? {
         //fetching from memory cache
         val memoryImage = getImageFromMemory(fileName)
@@ -136,6 +143,7 @@ class CacheUtils {
         return storedImage
     }
 
+    /* save image in disk and memory cache */
     fun saveImageInDiskAndMemory(fileName: String, bitmap: Bitmap?) {
         val memoryImage = getImageFromMemory(fileName)
         // additional condition to check whether it exist or not

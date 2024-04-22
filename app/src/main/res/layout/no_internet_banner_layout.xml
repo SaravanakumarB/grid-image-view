@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/tv_no_internet"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/internet_banner_height"
+  android:gravity="center"
+  android:textColor="@color/white"
+  android:translationZ="@dimen/dp_5"
+  android:textSize="@dimen/sp_10"
+  android:visibility="visible"
+  tools:background="@color/red"
+  tools:text="No Internet" />
+

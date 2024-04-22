@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">grid_image_view</string>
+    <!--Action-->
+    <string name="retry">Retry</string>
+    <string name="internet_back">Internet is Back !!</string>
+    <string name="no_connection">No Internet Connection</string>
+    <string name="no_internet">No Internet!</string>
+    <!--Error Strings-->
+    <string name="internet_connection_error">Internet connection error</string>
+    <string name="no_internet_connection_title">No Internet Connection</string>
+    <string name="no_internet_connection_message">Looks like your internet connection isn\'t steady.</string>
+    <string name="unexpected_error">Unexpected error occurred</string>
+    <string name="unexpected_nova_error">Something went wrong!\nPlease try again later or contact Kenko Support with the error screenshot</string>
+    <string name="unexpected_error_please_try_again">Something went wrong. Please try again.</string>
+    <string name="bad_request_error">Bad request error</string>
+    <string name="unauthorized_response_error">Unauthorized response error</string>
+    <string name="response_forbidden_error">Response is forbidden</string>
+    <string name="url_not_found_error">Requested url not found</string>
+    <string name="request_timeout_error">Request has been timed out</string>
+    <string name="internal_server_error">Internal server error</string>
+    <string name="invalid_response_error">Invalid response from server</string>
+    <string name="server_unavailable_to_respond_error">Server unavailable to respond</string>
+    <string name="response_timeout_error">Response has been timed out</string>
+</resources>

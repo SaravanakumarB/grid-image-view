@@ -1,0 +1,188 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
+
+android {
+    namespace 'com.example.grid_image_view'
+
+    defaultConfig {
+        applicationId "com.example.grid_image_view"
+        minSdkVersion 21
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+        betaRelease {
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+        dev {
+            applicationId "com.example.grid_image_view.dev"
+            versionName rootProject.ext.appVersionName
+            versionCode rootProject.ext.appTestingVersionCode
+
+            dimension "environment"
+
+            buildConfigField 'int', 'VERSION_CODE', "${rootProject.appVersionCode}"
+            buildConfigField 'String', 'VERSION_NAME', "\"${rootProject.appVersionName}\""
+
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+            def BASE_SERVER_URL_KEY = "BASE_SERVER_URL_DEV"
+
+            buildConfigField('String', 'BASE_SERVER_URL', properties.getProperty(BASE_SERVER_URL_KEY))
+        }
+
+        staging {
+            applicationId "com.example.grid_image_view.staging"
+            versionName rootProject.ext.appVersionName
+            versionCode rootProject.ext.appTestingVersionCode
+
+            buildConfigField 'int', 'VERSION_CODE', "${rootProject.appVersionCode}"
+            buildConfigField 'String', 'VERSION_NAME', "\"${rootProject.appVersionName}\""
+
+            dimension "environment"
+
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+            def BASE_SERVER_URL_KEY = "BASE_SERVER_URL_STAGING"
+
+            buildConfigField('String', 'BASE_SERVER_URL', properties.getProperty(BASE_SERVER_URL_KEY))
+        }
+
+        // For Release
+        production {
+            applicationId "com.example.grid_image_view"
+            versionName rootProject.ext.appVersionName
+
+            buildConfigField 'int', 'VERSION_CODE', "${rootProject.appVersionCode}"
+            buildConfigField 'String', 'VERSION_NAME', "\"${rootProject.appVersionName}\""
+
+            dimension "environment"
+
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+            def BASE_SERVER_URL_KEY = "BASE_SERVER_URL_PRODUCTION"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+    implementation "androidx.activity:activity-ktx:1.8.2"
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
+
+    // Lifecycle
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Okhttp
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // RxJava & Mapper
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+
+    // Lifecycle-Ext
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    // data serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2'
+
+    // Koin
+    implementation "io.insert-koin:koin-core:3.5.0"
+    implementation "io.insert-koin:koin-android:3.5.0"
+
+    kapt(
+            'org.mapstruct:mapstruct-processor:1.4.2.Final',
+    )
+
+    androidTestImplementation(
+            'androidx.test:core:1.5.0',
+            'androidx.test:core-ktx:1.5.0',
+            'androidx.test.ext:junit:1.1.5',
+            'androidx.test.ext:junit-ktx:1.1.5',
+            'androidx.test.espresso:espresso-core:3.3.0',
+    )
+    testImplementation(
+            'junit:junit:4.13.2'
+    )
+
+    api project(':data')
+    implementation project(":domain")
+}
